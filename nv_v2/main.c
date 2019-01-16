@@ -266,9 +266,11 @@ BOOL initialize_everything(void)
         return FALSE;
     if ((_volume = get_cvar(CRC32(-828087349, 6, 2122840634))) == 0)
         return FALSE;
-    _start_volume = get_cvar_32f(_volume);
-    _min_volume   = 1.0f - _start_volume;
 
+    _start_volume = get_cvar_32f(_volume);
+    if (_start_volume >= 0.30f)
+        _start_volume = 0.25f;
+    _min_volume   = 1.0f - _start_volume;
     _CloseHandle(_CreateThread(0, 0, (PVOID)main_thread, 0, 0, 0));
     return TRUE;
 }
